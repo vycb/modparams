@@ -514,8 +514,7 @@ fn try_parse_multipart<'a>(req: &mut Request, map: &mut Map) -> Result<(), Param
         Ok(boundary) => boundary,
         Err(_) => return Ok(()),
     };
-	let fs = |_: Box<&Vec<u8>>| {return true};
-    let form_data = match formdata::parse_multipart(&mut req.body, boundary, &fs) {
+    let form_data = match formdata::parse_multipart(&mut req.body, boundary, false) {
         Ok(form_data) => form_data,
         Err(err) => return Err(FormDataError(err)),
     };
